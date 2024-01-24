@@ -1,1 +1,1 @@
-# python-to-aws
+# Python for AWS Course.
