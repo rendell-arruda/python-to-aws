@@ -1,4 +1,4 @@
-<h1 id='title'>☁️ Python for AWS Course</h1>
+<h1 id='title'>🐍 Python for AWS Course</h1>
 
 > Este repositório contém os projetos desenvolvidos no Curso de Python para AWS com 5 scripts para automatização da criação de recursos na nuvem da Amazon. O curso faz parte da Comunidade Revolução Cloud, comandada pelo grande André Iacono, da qual eu participo.
  
