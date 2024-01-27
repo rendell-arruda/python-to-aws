@@ -8,7 +8,7 @@ O curso ainda está em andamento e as próximas atualizações viram conforme as
 Os projetos foram divididos nas seguintes aulas:
 
 - [x] Script 1 - EC2 e Lambda;
-- [ ] Script 2 - Upload S3;
+- [x] Script 2 - Upload S3;
 - [ ] Script 3 - Backup EC2;
 - [ ] Script 4 - EC2 On e Off;
 - [ ] Script 5 - DynamoDb;
