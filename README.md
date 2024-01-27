@@ -19,7 +19,7 @@ Os projetos foram divididos nas seguintes aulas:
 
 <h3> ☕ Usando as Lambdas Functions</h3>
 
-Para usar cada scritp siga estas etapas:
+Para usar cada script siga estas etapas:
 
  1. Crie uma função lambda selecionando em <b>"Runtime"</b> qual versão de python você gostaria de usar - recomendo Python 3.9;
  2. Em permissões crie uma new role com permissões básicas de Lambda - Por default sua Lambda function virá com permissões apenas para o CloudWatch;
