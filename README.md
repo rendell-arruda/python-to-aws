@@ -3,6 +3,7 @@
 > Este repositório contém os projetos desenvolvidos no Curso de Python para AWS com 5 scripts para automatizar a criação de recursos e tarefas na nuvem da Amazon utilizando Lambda Functions. O curso faz parte da Comunidade Revolução Cloud, comandada pelo grande André Iacono, da qual eu participo.
  
 <h3>💻 Tecnologias envolvidas</h3>
+
 ![Amazon AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
