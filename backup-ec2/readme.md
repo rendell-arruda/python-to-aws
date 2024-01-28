@@ -2,7 +2,7 @@
 <p>Para este laboratório não se esqueça de:</p>
 <ul>
 <li>Criar a Instância que será afetada e para que o backup possa ser realizado;</li>
-<li>Add a tag `<key = backup>` com `<value = true>` para que o código seja executado com sucesso;</li>
+<li>Add a tag key = backup com value = true para que o código seja executado com sucesso;</li>
 <li>Verificar a role e suas permissões para o CloudWatch, EventBridge e EC2;</li>
 <li>Criar o agendamento da periodicidade de execução da sua lambda function no EventBridge;</li>
 <li>Aumentar o valor do timeout da lambda function para 1 min para caso sua função demore na execução;</li>
