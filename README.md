@@ -14,7 +14,7 @@ Os projetos foram divididos nas seguintes aulas:
 - [x] Script 1 - EC2 e Lambda: criação de instâncias;
 - [x] Script 2 - Upload de arquivos no S3: 
 - [x] Script 3 - Backup/snapshot de instâncias EC2;
-- [ ] Script 4 - EC2 On e Off: agendamento de on e off via Cloudwatch;
+- [x] Script 4 - EC2 On e Off: agendamento de on e off via Cloudwatch e EventBridge;
 - [ ] Script 5 - DynamoDb;
 
 <h3> ☕ Usando as Lambdas Functions</h3>
