@@ -27,8 +27,9 @@ Para usar cada script siga estas etapas:
  4. Edite a Permission Policy na console do IAM adicionando as permissões necessárias conforme seu objetivo. Cada pasta desse projeto possui uma sugestão de IAM role;
  5. Voltando ao painel da Lambda function cole na aba <b>Code</b> o código python disponibilizado no projeto;
  6. Vai trabalhar com variáveis? Edite suas variáveis na aba <b>Configuration</b> opção <b>Environment variables</b>;
- 7. Se você chegou nessa etapa você pode testar sua função Lambda clicando em <b>Test</b>;
- 8. Adicionalmente você pode conferir a execução da sua Lambda function pelos logs do CloudWatch.
+ 7. Ao terminar de editar seu código clique em deploy para finalizar;
+ 8. Se você chegou nessa etapa você pode testar sua função Lambda clicando em <b>Test</b>;
+ 9. Adicionalmente você pode conferir a execução da sua Lambda function pelos logs do CloudWatch.
 
 
 <h3> 📫 Contribuindo para este projeto</h3>
