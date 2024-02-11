@@ -16,6 +16,7 @@ Os projetos foram divididos nas seguintes aulas:
 - [x] Script 3 - Backup/snapshot de instâncias EC2;
 - [x] Script 4 - EC2 On e Off: agendamento de on e off via Cloudwatch e EventBridge;
 - [x] Script 5 - DynamoDb;
+- [x] Script 6 - Delete EBS no attached with conditional tag
 
 <h3> ☕ Usando as Lambdas Functions</h3>
 
