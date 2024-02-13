@@ -2,7 +2,7 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
+            "Sid": "EC2",
             "Effect": "Allow",
             "Action": [
                 "ec2:DeleteVolume",
@@ -13,13 +13,19 @@
             "Resource": "*"
         },
         {
-            "Sid": "VisualEditor1",
+            "Sid": "lambda",
             "Effect": "Allow",
-            "Action": "logs:CreateLogGroup",
-            "Resource": "arn:aws:logs:us-east-1:266549158321:*"
+            "Action": [
+                "lambda:InvokeFunction",
+                "logs:CreateLogGroup"
+            ],
+            "Resource": [
+                "arn:aws:logs:us-east-1:266549158321:*",
+                "arn:aws:lambda:us-east-1:266549158321:function:delete_ebs_noattached"
+            ]
         },
         {
-            "Sid": "VisualEditor2",
+            "Sid": "logs",
             "Effect": "Allow",
             "Action": [
                 "logs:CreateLogStream",

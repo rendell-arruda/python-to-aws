@@ -21,4 +21,4 @@ def lambda_handler(event, context):
                 print(f'Volume {volume.id} excluído com sucesso')
         else:
             # se o volume estiver anexado a uma instancia
-            print(f'O volume {volume.id} está anexado a instancia {volume.attachment.instance-id}')
+            print(f'O volume {volume.id} está anexado a instancia')
