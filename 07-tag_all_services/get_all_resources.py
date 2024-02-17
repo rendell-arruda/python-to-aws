@@ -7,6 +7,9 @@ client = session.client('resourcegroupstaggingapi')
 
 # retornar todos os servicos da conta com seus atributos
 # Esta operação retorna uma lista de recursos e seus atributos.
-response = client.get_resources()
+get_arn_resource = client.get_resources()['ResourceTagMappingList'][0]['ResourceARN']
 
-print(response)
+# tags = client.get_resources()['ResourceTagMappingList'][0]['Tags']
+
+
+print(get_arn_resource)

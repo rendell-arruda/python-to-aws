@@ -7,7 +7,9 @@ client = session.client('resourcegroupstaggingapi')
 # definir um metodo
 tag_key = 'map-migrated'
 tag_value = 'mig4777'
-resource_arn = 'arn:aws:ec2:us-east-1:266549158321:instance/i-0354051ed688a8171'
+get_arn_resource = client.get_resources()['ResourceTagMappingList'][0]['ResourceARN']
+
+resource_arn = get_arn_resource
 
 response = client.tag_resources(
     ResourceARNList=[
