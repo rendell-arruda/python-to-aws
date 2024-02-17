@@ -1,0 +1,14 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "tagResources",
+            "Effect": "Allow",
+            "Action": [
+                "tag:TagResource",
+                "ec2:CreateTags"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
