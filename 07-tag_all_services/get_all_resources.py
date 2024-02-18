@@ -5,11 +5,16 @@ session = boto3.Session(profile_name='default')
 # cria um client(objeto) AWS Resource Groups Tagging API.
 client = session.client('resourcegroupstaggingapi')
 
-# retornar todos os servicos da conta com seus atributos
-# Esta operação retorna uma lista de recursos e seus atributos.
-get_arn_resource = client.get_resources()['ResourceTagMappingList'][0]['ResourceARN']
+# retornar todos os atributos dos recursos da conta
+get_resources = client.get_resources()['ResourceTagMappingList']
 
-# tags = client.get_resources()['ResourceTagMappingList'][0]['Tags']
+# lista as tags
+tags = get_resources[0]['Tags']
 
+# print(tags)
 
-print(get_arn_resource)
+# Itera sobre todos os recursos retornados pela chamada get_resources.
+for resource in get_resources:
+    # Obtem o ARN do recurso             
+    resource_arn = resource['ResourceARN']
+    print(resource_arn)

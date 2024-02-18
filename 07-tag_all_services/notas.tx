@@ -1,0 +1,5 @@
+o codigo funciona, tagueia mas há alguns arn que não estão no padrao que o resourcegroupstaggingapi' espera
+
+
+o get allresources funciona mas chega no arn:aws:payments::266549158321:payment-instrument:6ce10c47-424a-4c45-94ab-4afb71ab9d7a
+que o arn está fora do padrão que o resourcegroupstaggingapi' espera ele para a execucao 
