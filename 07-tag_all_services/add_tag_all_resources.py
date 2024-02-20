@@ -8,19 +8,20 @@ def lambda_handler(event, context):
     arn_pattern = re.compile(r'arn:aws:[a-z0-9\-]+:[a-z0-9\-]+:[0-9]+:[a-zA-Z0-9\-\/]+')
 
     # Cria uma sessão do Boto3 usando um perfil chamado 'default'. No caso de uso de aws sso será importante usar
-    session = boto3.Session(profile_name='default')
-    regions = session.get_available_regions('resourcegroupstaggingapi')
+    regions = ['us-east-1','us-east-2', 'sa-east-1']
+    # regions = session.get_available_regions('resourcegroupstaggingapi')
     
     # percorrer todas as regioes da contas
     for region in regions:
+        session = boto3.Session(profile_name='default',region_name=region)
         print(f'entrando na regiao {region}')
         try:
             # Cria um client para chamadas ao serviço AWS Resource Groups Tagging API. 
-            client = session.client('resourcegroupstaggingapi', region_name=region)
+            client = session.client('resourcegroupstaggingapi')
 
             # defini quais tags serao adicionadas 
             tag_key = 'map-mig'
-            tag_value = 'to_cansado_ja'
+            tag_value = 'mig-0000'
 
             #armazenar os arns fora do padrao: APAGAR
             invalid_arns = []

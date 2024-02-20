@@ -2,7 +2,7 @@ import boto3
 
 def obter_recursos():
     # Inicializa a sessão e o cliente para o resourcegroupstaggingapi
-    session = boto3.Session()
+    session = boto3.Session(profile_name='default')
     regions = session.get_available_regions('resourcegroupstaggingapi')
     # Faz uma chamada à operação get_resources para obter uma lista de Dic com as infos dos recursos.
 
