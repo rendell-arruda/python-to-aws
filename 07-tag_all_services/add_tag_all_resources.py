@@ -42,7 +42,7 @@ def lambda_handler(event, context):
                             
                         # Verifica se a tag 'map-migrated' já existe no recurso.
                         if any(tag['Key'] == tag_key for tag in tags):
-                            print(f'O resource: {resource_arn} já possui a tag {tag_key}')
+                            print(f'O resource: {resource_arn} já possui a tag {tag_key} e o value será atualizado')
                             response = client.tag_resources(
                                 ResourceARNList=[resource_arn],Tags={tag_key: tag_value})
                                 
