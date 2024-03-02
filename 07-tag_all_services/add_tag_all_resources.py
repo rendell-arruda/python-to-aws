@@ -1,12 +1,7 @@
 import boto3
-# importa o modulo para usar regex
-import re
 
 def lambda_handler(event, context):
     
-    # Cria uma expressão regular para validar ARNs
-    arn_pattern = re.compile(r'arn:aws:[a-z0-9\-]+:[a-z0-9\-]+:[0-9]+:[a-zA-Z0-9\-\/]+')
-
     # Cria uma sessão do Boto3 usando um perfil chamado 'default'. No caso de uso de aws sso será importante usar
     regions = ['us-east-1','us-east-2', 'sa-east-1']
     # regions = session.get_available_regions('resourcegroupstaggingapi')
@@ -21,7 +16,7 @@ def lambda_handler(event, context):
 
             # defini quais tags serao adicionadas 
             tag_key = 'map-mig'
-            tag_value = 'mig-0000'
+            tag_value = 'mig-0231'
 
             #armazenar os arns fora do padrao: APAGAR
             invalid_arns = []
@@ -36,26 +31,24 @@ def lambda_handler(event, context):
                     resource_arn = resource['ResourceARN']
 
                     #validar o arn com metodo match
-                    if arn_pattern.match(resource_arn): 
+                   
                         # Obtém as tags do recurso. Se o recurso não tiver tags, retorna uma lista vazia.
-                        tags = resource.get('Tags',[])                
+                    tags = resource.get('Tags',[])                
                             
                         # Verifica se a tag 'map-migrated' já existe no recurso.
-                        if any(tag['Key'] == tag_key for tag in tags):
-                            print(f'O resource: {resource_arn} já possui a tag {tag_key} e o value será atualizado')
-                            response = client.tag_resources(
-                                ResourceARNList=[resource_arn],Tags={tag_key: tag_value})
+                    if any(tag['Key'] == tag_key for tag in tags):
+                        print(f'O resource: {resource_arn} já possui a tag {tag_key} e o value será atualizado')
+                        response = client.tag_resources(ResourceARNList=[resource_arn],Tags={tag_key: tag_value})
                                 
-                        else:
-                            # Se a tag não existir, imprime uma mensagem indicando que o recurso será taggeado.
-                            print(f'O resource; {resource_arn} será tagueado') 
-                            # Chama a operação tag_resources para adicionar a tag ao recurso.
-                            response = client.tag_resources(
-                                ResourceARNList=[resource_arn],Tags={tag_key: tag_value})
-                    # caso o arn fora di padrao
                     else:
-                        print(f'O ARN: {resource_arn} não esta no padrão valido')
-                        invalid_arns.append(resource_arn)
+                            # Se a tag não existir, imprime uma mensagem indicando que o recurso será taggeado.
+                        print(f'O resource; {resource_arn} será tagueado') 
+                            # Chama a operação tag_resources para adicionar a tag ao recurso.
+                        response = client.tag_resources(ResourceARNList=[resource_arn],Tags={tag_key: tag_value})
+                    # caso o arn fora di padrao
+                else:
+                    print(f'O ARN: {resource_arn} não esta no padrão valido')
+                    invalid_arns.append(resource_arn)
                         
                 print("ARNS fora do padrão:", invalid_arns)    
 
