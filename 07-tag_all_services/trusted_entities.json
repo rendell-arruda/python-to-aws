@@ -4,20 +4,15 @@
 		{
 			"Effect": "Allow",
 			"Principal": {
-				"Service": "scheduler.amazonaws.com"
+				"Service": "lambda.amazonaws.com"
 			},
-			"Action": "sts:AssumeRole",
-			"Condition": {
-				"StringEquals": {
-					"aws:SourceAccount": "266549158321"
-				}
-			}
+			"Action": "sts:AssumeRole"
 		},
 		{
-			"Sid": "lambda",
+			"Sid": "scheduler",
 			"Effect": "Allow",
 			"Principal": {
-				"Service": "lambda.amazonaws.com"
+				"Service": "scheduler.amazonaws.com"
 			},
 			"Action": "sts:AssumeRole"
 		}
