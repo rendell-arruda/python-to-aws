@@ -135,7 +135,8 @@
                 "license-manager:TagResource",
                 "securityhub:TagResource",
                 "s3:ReplicateTags",
-                "s3:PutObjectTagging"
+                "s3:PutObjectTagging",
+                "lambda:InvokeFunction"
             ],
             "Resource": "*"
         }
