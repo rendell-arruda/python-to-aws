@@ -2,7 +2,6 @@ import boto3
 
 
 def lambda_handler(event, context):
-    # profile = 'observability-dev'
     regions = ["us-east-1", "sa-east-1", "us-east-2"]
 
     # percorrer todas as regioes da contas
