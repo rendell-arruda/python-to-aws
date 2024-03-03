@@ -2,11 +2,16 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "tagResources",
+            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
-                "tag:TagResource",
-                "ec2:CreateTags"
+                "logs:CreateLogStream",
+                "tag:GetResources",
+                "ec2:CreateTags",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents",
+                "tag:TagResources",
+                "ec2:DescribeTags"
             ],
             "Resource": "*"
         }

@@ -26,7 +26,7 @@ def lambda_handler(event, context):
                 for resource in page["ResourceTagMappingList"]:
                     # obtem o arn do recurso
                     resource_arn = resource["ResourceARN"]
-                    print(resource_arn)
+                    # print(resource_arn)
 
                     # Obtém as tags do recurso. Se o recurso não tiver tags, retorna uma lista vazia.
                     tags = resource.get("Tags", [])
