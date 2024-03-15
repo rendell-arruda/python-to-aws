@@ -1,36 +1,40 @@
 import json
 import boto3
+from datetime import datetime, timezone, timedelta
 
 dynamodb = boto3.client("dynamodb")
 ec2 = boto3.client("ec2")
 
 
 def lambda_handler(event, context):
-    # Recuperar os IDs dos snapshots armazenados no DynamoDB
-    response = dynamodb.scan(TableName="list_snapshots")
-    snapshots_to_delete = response.get("Items", [])
+    regions = ["us-east-1", "sa-east-1"]
+    days_created = 0
 
-    for snapshot in snapshots_to_delete:
-        snapshot_id = snapshot["SnapshotId"]["S"]
-        region = snapshot["Region"]["S"]
+    for region in regions:
+        print(f"##### {region} #####")
 
-        # Verificar se o snapshot ainda existe
-        try:
-            ec2.describe_snapshots(SnapshotIds=[snapshot_id])
-            # O snapshot ainda existe, exclua-o
-            ec2.delete_snapshot(SnapshotId=snapshot_id)
-            # Remova o item do DynamoDB após a exclusão
-            dynamodb.delete_item(
-                TableName="list_snapshots", Key={"SnapshotId": {"S": snapshot_id}}
-            )
-        except ec2.exceptions.ClientError as e:
-            # Se o snapshot não existir mais, remova-o do DynamoDB
-            if e.response["Error"]["Code"] == "InvalidSnapshot.NotFound":
-                dynamodb.delete_item(
-                    TableName="list_snapshots", Key={"SnapshotId": {"S": snapshot_id}}
-                )
+        ec2 = boto3.client("ec2", region_name=region)
+        paginator = ec2.get_paginator("describe_snapshots")
+        snapshot_iterator = paginator.paginate(OwnerIds=["self"])
 
-    # Após a exclusão de todos os snapshots, limpe a tabela DynamoDB
-    dynamodb.delete_table(TableName="list_snapshots")
+        for page in snapshot_iterator:
+            snapshots = page["Snapshots"]
 
-    return {"statusCode": 200, "body": json.dumps("Código executado com sucesso")}
+            for snapshot in snapshots:
+                snapshot_id = snapshot["SnapshotId"]
+                start_time = snapshot["StartTime"].replace(tzinfo=timezone.utc)
+                difference = datetime.now(timezone.utc) - start_time
+
+                if difference.days >= days_created:
+                    dynamodb.put_item(
+                        TableName="list_snapshots",
+                        Item={
+                            "SnapshotId": {"S": snapshot_id},
+                            "Region": {"S": region},
+                        },
+                    )
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps("Snapshots verificados e enviados para o DynamoDB"),
+    }
