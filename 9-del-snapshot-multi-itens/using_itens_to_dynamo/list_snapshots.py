@@ -30,7 +30,6 @@ def lambda_handler(event, context):
                         TableName="list_snapshots",
                         Item={
                             "SnapshotId": {"S": snapshot_id},
-                            "Region": {"S": region},
                         },
                     )
 
