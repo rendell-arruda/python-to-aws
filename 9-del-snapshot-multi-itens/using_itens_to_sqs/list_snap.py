@@ -1,78 +1,76 @@
 import boto3
 import os
 import json
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 
-# Inicializa o cliente do Boto3
+# Define o número de dias para comparar com as snapshots
+DAYS_THRESHOLD = 7
+
+# Define o nome da fila SQS para enviar as snapshots antigas
+SQS_QUEUE_NAME = "old-snapshots"
+
+# Define o nome da tabela DynamoDB para armazenar informações de paginação
+DYNAMODB_TABLE_NAME = "snapshot-pagination"
+
+# Inicializa os clientes da AWS
 ec2 = boto3.client("ec2")
 sqs = boto3.client("sqs")
-dynamodb = boto3.client("dynamodb")
-
-# URL da fila SQS
-SQS_QUEUE_URL = "<sua_url_da_fila_sqs>"
-
-# Nome da tabela DynamoDB
-DYNAMODB_TABLE_NAME = "<nome_da_tabela_dynamodb>"
+dynamodb = boto3.resource("dynamodb")
 
 
 def lambda_handler(event, context):
-    # Obtém o token de páginação da última execução, se disponível
-    last_evaluated_key = get_last_evaluated_key()
+    # Obtém o token de paginação da última chamada, se houver
+    last_pagination_token = get_last_pagination_token()
 
-    # Cria um Paginator para listar os snapshots
+    # Cria um paginador para listar todas as snapshots na organização
     paginator = ec2.get_paginator("describe_snapshots")
-
-    # Se houver um token de páginação da execução anterior, use-o
-    if last_evaluated_key:
-        page_iterator = paginator.paginate(StartingToken=last_evaluated_key)
-    else:
-        page_iterator = paginator.paginate()
-
-    # Itera sobre os snapshots usando o paginator
-    for page in page_iterator:
-        for snapshot in page["Snapshots"]:
-            process_snapshot(snapshot)
-
-        # Salva o token de páginação (NextToken) no DynamoDB
-        save_next_token(page["NextToken"])
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps("Processamento de snapshots concluído!"),
-    }
-
-
-def process_snapshot(snapshot):
-    # Obtém a data de criação do snapshot
-    creation_date = snapshot["StartTime"]
-
-    # Calcula os dias desde a criação
-    dias_desde_criacao = (datetime.now() - creation_date).days
-
-    # Obtém o limite de idade do snapshot da variável de ambiente
-    limite_idade_snapshot = int(os.environ.get("LIMITE_IDADE_SNAPSHOT", 7))
-
-    # Se o snapshot for mais antigo que o limite, envie-o para a SQS
-    if dias_desde_criacao > limite_idade_snapshot:
-        # Envia o snapshot para a fila SQS
-        sqs.send_message(QueueUrl=SQS_QUEUE_URL, MessageBody=json.dumps(snapshot))
-
-
-def get_last_evaluated_key():
-    # Recupera o LastEvaluatedKey do DynamoDB
-    response = dynamodb.get_item(
-        TableName=DYNAMODB_TABLE_NAME, Key={"Key": {"S": "LastEvaluatedKey"}}
+    page_iterator = paginator.paginate(
+        OwnerIds=["self"],
+        PaginationConfig={"PageSize": 1000, "StartingToken": last_pagination_token},
     )
 
+    # Percorre todas as snapshots
+    for page in page_iterator:
+        # Armazena o token de paginação da página atual
+        store_last_pagination_token(page["NextToken"])
+        for snapshot in page["Snapshots"]:
+            # Verifica se a snapshot é mais antiga do que o limite
+            snapshot_age = datetime.now() - snapshot["StartTime"].replace(tzinfo=None)
+            if snapshot_age.days >= DAYS_THRESHOLD:
+                # Envia o ID da snapshot para a fila SQS
+                sqs.send_message(
+                    QueueUrl=get_queue_url(),
+                    MessageBody=json.dumps({"snapshot_id": snapshot["SnapshotId"]}),
+                )
+
+
+def get_last_pagination_token():
+    # Obtém o token de paginação da última chamada do DynamoDB
+    table = dynamodb.Table(DYNAMODB_TABLE_NAME)
+    response = table.get_item(Key={"id": "last_pagination_token"})
     if "Item" in response:
-        return response["Item"]["Value"]["S"]
+        return response["Item"]["pagination_token"]
     else:
         return None
 
 
-def save_next_token(next_token):
-    # Salva o token de páginação (NextToken) no DynamoDB
-    dynamodb.put_item(
-        TableName=DYNAMODB_TABLE_NAME,
-        Item={"Key": {"S": "LastEvaluatedKey"}, "Value": {"S": next_token}},
+def store_last_pagination_token(pagination_token):
+    # Armazena o token de paginação da última chamada no DynamoDB
+    table = dynamodb.Table(DYNAMODB_TABLE_NAME)
+    table.put_item(
+        Item={"id": "last_pagination_token", "pagination_token": pagination_token}
     )
+
+
+def get_queue_url():
+    # Obtém a URL da fila SQS
+    response = sqs.get_queue_url(QueueName=SQS_QUEUE_NAME)
+    return response["QueueUrl"]
+
+
+# Este código deve ser implantado como uma função Lambda e configurado para ser executado em um cronograma.
+# Ele listará todas as snapshots na organização, comparará com a variável DAYS_THRESHOLD e enviará os IDs das snapshots
+# antigas para uma fila SQS chamada old-snapshots. Ele também armazenará o ID da última snapshot processada em uma tabela DynamoDB
+# chamada snapshot-pagination, para que possa continuar de onde parou se o processo não foi concluído na última execução.
+# Você precisará criar uma segunda função Lambda para consumir a fila old-snapshots e excluir as snapshots antigas.
