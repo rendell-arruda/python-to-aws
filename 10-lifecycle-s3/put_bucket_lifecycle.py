@@ -10,16 +10,27 @@ def put_bucket_lifecycle_configuration(bucket_name):
     lifecycle_configuration = {
         "Rules": [
             {
-                "ID": "ExpiringObjects",  # Identificador da regra
-                "Expiration": {"Days": 30},  # Expira objetos após 30 dias
-                "Prefix": "",  # Aplica a regra a todos os objetos do bucket
-                "Status": "Enabled",  # Ativa a regra
-                # "Transitions": [  # Define transições de classe de armazenamento (opcional)
-                #     {
-                #         "Days": 30,
-                #         "StorageClass": "ONEZONE_IA",  # Exemplo de transição para a classe ONEZONE_IA
-                #     },
-                # ],
+                "ID": "ExpiringObjects",  # Identificador da regra(obrigatório)
+                "Expiration": {
+                    "Days": 30,  # Expira objetos após 30 dias
+                    "ExpiredObjectDeleteMarker": True,  # Define se o marcador de exclusão será criado quando o objeto expirar (opcional)
+                },
+                "Prefix": "",  # Aplica a regra a todos os objetos do bucket  # Define se o marcador de exclusão será criado quando o objeto expirar (opcional)
+                "Status": "Enabled",  # Status da regra. Ativa nesse caso
+                "Transitions": [  # Transições de classe de armazenamento (opcional)
+                    {
+                        # "Date": datetime(
+                        #     2015, 1, 1
+                        # ),  # Data específica para a transição (opcional)
+                        # "Days": 123,  # Número de dias após os quais a transição ocorre (opcional)
+                        "StorageClass": "GLACIER"
+                        | "STANDARD_IA"
+                        | "ONEZONE_IA"
+                        | "INTELLIGENT_TIERING"
+                        | "DEEP_ARCHIVE"
+                        | "GLACIER_IR",  # Classe de armazenamento para a transição (obrigatório)
+                    },
+                ],
                 # "NoncurrentVersionTransitions": [  # Define transições de versões não atuais (opcional)
                 #     {
                 #         "NoncurrentDays": 30,
@@ -27,10 +38,6 @@ def put_bucket_lifecycle_configuration(bucket_name):
                 #         "NewerNoncurrentVersions": 5,
                 #     },
                 # ],
-                "NoncurrentVersionExpiration": {
-                    "NoncurrentDays": 30,  # Expira versões não atuais após 30 dias
-                    # "NewerNoncurrentVersions": 10,  # Opção não disponível no Lifecycle V1
-                },
             },
         ]
     }
