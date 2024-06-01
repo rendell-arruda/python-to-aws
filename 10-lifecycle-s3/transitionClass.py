@@ -15,8 +15,8 @@ def put_bucket_lifecycle_configuration(bucket_name):
                 "Status": "Enabled",  # Ativa a regra
                 "Transitions": [  # Transições de classe de armazenamento (opcional)
                     {
-                        "Days": 30,  # Número de dias após os quais a transição ocorre (opcional)
-                        "StorageClass": "GLACIER",
+                        "Days": 1,  # Número de dias após os quais a transição ocorre (opcional)
+                        "StorageClass": "INTELLIGENT_TIERING",
                         # Classe de armazenamento para a transição (obrigatório)
                     },
                 ],
@@ -34,7 +34,7 @@ def put_bucket_lifecycle_configuration(bucket_name):
         print(f"Error applying policy to bucket {bucket_name}: {e}")
 
 
-bucket_name = "rendell-s3-logs"
+bucket_name = "ilustre-bucket"
 put_bucket_lifecycle_configuration(bucket_name)
 
 # def list_buckets():

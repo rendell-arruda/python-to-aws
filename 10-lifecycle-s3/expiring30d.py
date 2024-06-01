@@ -11,7 +11,7 @@ def put_bucket_lifecycle_configuration(bucket_name):
         "Rules": [
             {
                 "ID": "Expiring30d",  # Identificador da regra
-                "Expiration": {"Days": 1},  # Expira objetos após 30 dias
+                "Expiration": {"Days": 1},  # Expira objetos após X dias
                 "Prefix": "",  # Aplica a regra a todos os objetos do bucket
                 "Status": "Enabled",  # Ativa a regra
             },

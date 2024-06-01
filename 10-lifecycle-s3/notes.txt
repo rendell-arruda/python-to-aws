@@ -1,0 +1,1 @@
+texto de teste do script para mudanca de lifecycle
