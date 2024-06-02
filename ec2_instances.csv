@@ -1,0 +1,4 @@
+Instance Id,Instance State,Name,Schedule
+i-0415540ce37b03b87,stopped,ec2-test-describe,stopped
+i-0bfafde25e009c31e,running,ec2-2-para-testes,sp-office-2
+i-086d89c1f72420723,running,instancia-03,sp-office-1

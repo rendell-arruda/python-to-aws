@@ -1,0 +1,20 @@
+[
+    {
+        "Instance Id": "i-0415540ce37b03b87",
+        "Instance State": "stopped",
+        "Name": "ec2-test-describe",
+        "Schedule": "stopped"
+    },
+    {
+        "Instance Id": "i-0bfafde25e009c31e",
+        "Instance State": "running",
+        "Name": "ec2-2-para-testes",
+        "Schedule": "sp-office-2"
+    },
+    {
+        "Instance Id": "i-086d89c1f72420723",
+        "Instance State": "running",
+        "Name": "instancia-03",
+        "Schedule": "sp-office-1"
+    }
+]
