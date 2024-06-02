@@ -1,20 +1,30 @@
 [
     {
         "Instance Id": "i-0415540ce37b03b87",
-        "Instance State": "stopped",
         "Name": "ec2-test-describe",
+        "Instance State": "stopped",
+        "Instance Type": "t2.micro",
         "Schedule": "stopped"
     },
     {
-        "Instance Id": "i-0bfafde25e009c31e",
+        "Instance Id": "i-0ad804395b1cd71a8",
+        "Name": null,
         "Instance State": "running",
+        "Instance Type": "t2.micro",
+        "Schedule": "running"
+    },
+    {
+        "Instance Id": "i-0bfafde25e009c31e",
         "Name": "ec2-2-para-testes",
+        "Instance State": "running",
+        "Instance Type": "t2.micro",
         "Schedule": "sp-office-2"
     },
     {
         "Instance Id": "i-086d89c1f72420723",
-        "Instance State": "running",
         "Name": "instancia-03",
+        "Instance State": "running",
+        "Instance Type": "t2.micro",
         "Schedule": "sp-office-1"
     }
 ]

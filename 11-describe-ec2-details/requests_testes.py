@@ -21,26 +21,28 @@ for reservation in response["Reservations"]:
         instance_id = instance["InstanceId"]
         # Pegar o estado da instância
         instance_state = instance["State"]["Name"]
+        # pegar o type da instância
+        instance_type = instance["InstanceType"]
 
-        # pegar o nome da instância
-        name = None  # Inicializa a variável name
+        # ITERAR SOBRE TODAS AS TAGS DA INSTANCIA UMA VEZ
+        # tag name
+        name = None
+        # tag schedule
+        schedule = None
+        # lista todas as tags da instância
         for tag in instance.get("Tags", []):
             if tag["Key"] == "Name":
                 name = tag["Value"]
-                break
-        # pegar a tag Schedule
-        schedule = None
-        for tag in instance.get("Tags", []):
-            if tag["Key"] == "Schedule":
+            elif tag["Key"] == "Schedule":
                 schedule = tag["Value"]
-                break
 
         # Adiciona os detalhes da instancia  na lista
         instances_details.append(
             {
                 "Instance Id": instance_id,
-                "Instance State": instance_state,
                 "Name": name,
+                "Instance State": instance_state,
+                "Instance Type": instance_type,
                 "Schedule": schedule,
             }
         )
@@ -57,7 +59,7 @@ with open(json_file, "w") as f:
 
 # especificar o nome do arquivo de saida em csv
 csv_file = "ec2_instances.csv"
-csv_columns = ["Instance Id", "Instance State", "Name", "Schedule"]
+csv_columns = ["Instance Id", "Name", "Instance State", "Instance Type", "Schedule"]
 
 try:
     with open(csv_file, "w", newline="") as csvfile:
