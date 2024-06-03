@@ -36,6 +36,11 @@ for reservation in response["Reservations"]:
             elif tag["Key"] == "Schedule":
                 schedule = tag["Value"]
 
+        # pegar os ebs volumes da instancia
+        ebs_volumes = []
+        for volume in instance.get("BlockDeviceMappings", []):
+            ebs_volumes.append(volume["Ebs"]["VolumeId"])
+
         # Adiciona os detalhes da instancia  na lista
         instances_details.append(
             {
@@ -44,6 +49,7 @@ for reservation in response["Reservations"]:
                 "Instance State": instance_state,
                 "Instance Type": instance_type,
                 "Schedule": schedule,
+                "Ebs Volumes": ebs_volumes,
             }
         )
 
@@ -59,7 +65,14 @@ with open(json_file, "w") as f:
 
 # especificar o nome do arquivo de saida em csv
 csv_file = "ec2_instances.csv"
-csv_columns = ["Instance Id", "Name", "Instance State", "Instance Type", "Schedule"]
+csv_columns = [
+    "Instance Id",
+    "Name",
+    "Instance State",
+    "Instance Type",
+    "Schedule",
+    "Ebs Volumes",
+]
 
 try:
     with open(csv_file, "w", newline="") as csvfile:

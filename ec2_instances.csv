@@ -1,5 +1,5 @@
-Instance Id,Name,Instance State,Instance Type,Schedule
-i-0415540ce37b03b87,ec2-test-describe,stopped,t2.micro,stopped
-i-0ad804395b1cd71a8,,running,t2.micro,running
-i-0bfafde25e009c31e,ec2-2-para-testes,running,t2.micro,sp-office-2
-i-086d89c1f72420723,instancia-03,running,t2.micro,sp-office-1
+Instance Id,Name,Instance State,Instance Type,Schedule,Ebs Volumes
+i-0415540ce37b03b87,ec2-test-describe,stopped,t2.micro,stopped,"['vol-086a20021cd5d8455', 'vol-004cf2d0e7704ad4c']"
+i-0ad804395b1cd71a8,,running,t2.micro,running,['vol-054608b3b16df857d']
+i-0bfafde25e009c31e,ec2-2-para-testes,running,t2.micro,sp-office-2,['vol-0ecab39b23a429184']
+i-086d89c1f72420723,instancia-03,running,t2.micro,sp-office-1,['vol-04f50affc90996baa']

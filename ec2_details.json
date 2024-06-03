@@ -4,27 +4,40 @@
         "Name": "ec2-test-describe",
         "Instance State": "stopped",
         "Instance Type": "t2.micro",
-        "Schedule": "stopped"
+        "Schedule": "stopped",
+        "Ebs Volumes": [
+            "vol-086a20021cd5d8455",
+            "vol-004cf2d0e7704ad4c"
+        ]
     },
     {
         "Instance Id": "i-0ad804395b1cd71a8",
         "Name": null,
         "Instance State": "running",
         "Instance Type": "t2.micro",
-        "Schedule": "running"
+        "Schedule": "running",
+        "Ebs Volumes": [
+            "vol-054608b3b16df857d"
+        ]
     },
     {
         "Instance Id": "i-0bfafde25e009c31e",
         "Name": "ec2-2-para-testes",
         "Instance State": "running",
         "Instance Type": "t2.micro",
-        "Schedule": "sp-office-2"
+        "Schedule": "sp-office-2",
+        "Ebs Volumes": [
+            "vol-0ecab39b23a429184"
+        ]
     },
     {
         "Instance Id": "i-086d89c1f72420723",
         "Name": "instancia-03",
         "Instance State": "running",
         "Instance Type": "t2.micro",
-        "Schedule": "sp-office-1"
+        "Schedule": "sp-office-1",
+        "Ebs Volumes": [
+            "vol-04f50affc90996baa"
+        ]
     }
 ]
