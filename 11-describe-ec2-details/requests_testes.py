@@ -41,6 +41,9 @@ for reservation in response["Reservations"]:
         for volume in instance.get("BlockDeviceMappings", []):
             ebs_volumes.append(volume["Ebs"]["VolumeId"])
 
+        # Converte a lista de IDs de volumes EBS em uma string concatenada
+        ebs_volumes_str = ", ".join(ebs_volumes)
+
         # Adiciona os detalhes da instancia  na lista
         instances_details.append(
             {
@@ -49,7 +52,7 @@ for reservation in response["Reservations"]:
                 "Instance State": instance_state,
                 "Instance Type": instance_type,
                 "Schedule": schedule,
-                "Ebs Volumes": ebs_volumes,
+                "Ebs Volumes": ebs_volumes_str,
             }
         )
 
