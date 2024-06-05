@@ -5,9 +5,38 @@ import os
 
 
 def lambda_handler(event, context):
+    # listar IDs das contas alvo
+    accounts = ["266549158321", "471112936182"]
+    role_name = "desbribe_ec2_details-role-jtvubyqy"
+
+    for account_id in accounts:
+        assumed_role = assume_role(account_id, role_name)
+        if assumed_role:
+            execute_task(assumed_role, account_id)
+
+
+def assume_role(account_id, role_name):
+    sts_client = boto3.client("sts")
+    try:
+        response = sts_client.assume_role(
+            RoleArn=f"arn:aws:iam::{account_id}:role/{role_name}",
+            RoleSessionName="LambdaSession",
+        )
+        credentials = response["Credentials"]
+        return boto3.Session(
+            aws_access_key_id=credentials["AccessKeyId"],
+            aws_secret_access_key=credentials["SecretAccessKey"],
+            aws_session_token=credentials["SessionToken"],
+        )
+    except Exception as e:
+        print(f"Error assuming role for account {account_id}: {str(e)}")
+        return None
+
+
+def execute_task(session, account_id):
 
     # Crie um cliente EC2
-    ec2_client = boto3.client("ec2")
+    ec2_client = session.client("ec2")
 
     # Descreva instâncias EC2
     response = ec2_client.describe_instances()
@@ -49,6 +78,7 @@ def lambda_handler(event, context):
             # Adiciona os detalhes da instancia  na lista
             instances_details.append(
                 {
+                    "Account Id": account_id,  # Adiciona o ID da conta
                     "Instance Id": instance_id,
                     "Name": name,
                     "Instance State": instance_state,
@@ -63,6 +93,7 @@ def lambda_handler(event, context):
     csv_file = "/tmp/ec2_instances.csv"
     # ESPECIFICA AS COLUNAS
     csv_columns = [
+        "Account Id",
         "Instance Id",
         "Name",
         "Instance State",
