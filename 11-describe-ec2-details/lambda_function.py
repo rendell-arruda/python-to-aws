@@ -66,6 +66,10 @@ def execute_task(session, account_id):
                     name = tag["Value"]
                 elif tag["Key"] == "Schedule":
                     schedule = tag["Value"]
+                elif tag["Key"] == "finops.produto":
+                    finops_produto = tag["Value"]
+                elif tag["Key"] == "Produto":
+                    produto = tag["Value"]
 
             # pegar os ebs volumes da instancia
             ebs_volumes = []
@@ -85,6 +89,8 @@ def execute_task(session, account_id):
                     "Instance Type": instance_type,
                     "Schedule": schedule,
                     "Ebs Volumes": ebs_volumes_str,
+                    "Finops produto": finops_produto,
+                    "Produto": produto,
                 }
             )
 
@@ -100,6 +106,8 @@ def execute_task(session, account_id):
         "Instance Type",
         "Schedule",
         "Ebs Volumes",
+        "Finops produto",
+        "Produto",
     ]
 
     try:
