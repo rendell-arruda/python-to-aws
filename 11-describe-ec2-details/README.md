@@ -167,17 +167,3 @@ Para contribuir com projeto, siga estas etapas:
 Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
 [⬆ Voltar ao topo](#title)<br>
-
-
-// {
-// 	"Version": "2012-10-17",
-// 	"Statement": [
-// 		{
-// 			"Effect": "Allow",
-// 			"Principal": {
-// 				"Service": "lambda.amazonaws.com"
-// 			},
-// 			"Action": "sts:AssumeRole"
-// 		}
-// 	]
-// }
