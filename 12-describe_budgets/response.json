@@ -1,0 +1,46 @@
+[
+    {'BudgetName': 'Limite 5dol', 'BudgetLimit': {'Amount': '3.0', 'Unit': 'USD'
+        }, 'CostFilters': {}, 'CostTypes': {'IncludeTax': True, 'IncludeSubscription': True, 'UseBlended': False, 'IncludeRefund': False, 'IncludeCredit': False, 'IncludeUpfront': True, 'IncludeRecurring': True, 'IncludeOtherSubscription': True, 'IncludeSupport': True, 'IncludeDiscount': True, 'UseAmortized': False
+        }, 'TimeUnit': 'MONTHLY', 'TimePeriod': {'Start': datetime.datetime(2023,
+            10,
+            31,
+            21,
+            0, tzinfo=tzlocal()), 'End': datetime.datetime(2087,
+            6,
+            14,
+            21,
+            0, tzinfo=tzlocal())
+        }, 'CalculatedSpend': {'ActualSpend': {'Amount': '0.0', 'Unit': 'USD'
+            }, 'ForecastedSpend': {'Amount': '0.152', 'Unit': 'USD'
+            }
+        }, 'BudgetType': 'COST', 'LastUpdatedTime': datetime.datetime(2024,
+        6,
+        9,
+        10,
+        29,
+        57,
+        570000, tzinfo=tzlocal())
+    },
+    {'BudgetName': 'My Zero-Spend Budget', 'BudgetLimit': {'Amount': '1.0', 'Unit': 'USD'
+        }, 'CostFilters': {}, 'CostTypes': {'IncludeTax': True, 'IncludeSubscription': True, 'UseBlended': False, 'IncludeRefund': False, 'IncludeCredit': False, 'IncludeUpfront': True, 'IncludeRecurring': True, 'IncludeOtherSubscription': True, 'IncludeSupport': True, 'IncludeDiscount': True, 'UseAmortized': False
+        }, 'TimeUnit': 'MONTHLY', 'TimePeriod': {'Start': datetime.datetime(2023,
+            10,
+            31,
+            21,
+            0, tzinfo=tzlocal()), 'End': datetime.datetime(2087,
+            6,
+            14,
+            21,
+            0, tzinfo=tzlocal())
+        }, 'CalculatedSpend': {'ActualSpend': {'Amount': '0.0', 'Unit': 'USD'
+            }, 'ForecastedSpend': {'Amount': '0.152', 'Unit': 'USD'
+            }
+        }, 'BudgetType': 'COST', 'LastUpdatedTime': datetime.datetime(2024,
+        6,
+        9,
+        10,
+        30,
+        33,
+        581000, tzinfo=tzlocal())
+    }
+]
