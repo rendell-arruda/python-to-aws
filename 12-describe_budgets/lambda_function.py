@@ -2,6 +2,7 @@ import boto3
 import json
 
 accountId = "266549158321"
+budget_details = []
 
 
 def lambda_handler(event, context):
@@ -34,7 +35,7 @@ def lambda_handler(event, context):
         #     "statusCode": 200,
         #     "body": json.dumps(alerts),
         # }
-
+        budget_details.append({})
     except Exception as e:
         print(f"Error describing budgets: {str(e)}")
         return {

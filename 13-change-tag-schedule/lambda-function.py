@@ -15,9 +15,14 @@ def lambda_handler(event, context):
             for reservation in response["Reservations"]:
                 for instance in reservation["Instances"]:
                     instance_Id = instance["InstanceId"]
-                    print(instanceId)
 
-                    instance_tags = instance.get()
+                    for tag in instance.get("Tags", []):
+                        if tag["Key"] == "Schedule":
+                            schedule_value = tag["Value"]
+                            # print(
+                            #     f"Instance {instance_Id} has schedule {schedule_value}"
+                            # )
+
         except Exception as e:
             print(f"Error describing instances: {str(e)}")
             return {
